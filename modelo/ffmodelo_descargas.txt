@@ -1,0 +1,95 @@
+# -*- coding: utf-8 -*-
+from PyQt5 import QtWidgets
+from modelo.lectura_videos import LecturaVideos
+from modelo.modelo_descargas import DescargarVideos
+
+class ControladorVista:
+    """Controlador que conecta la vista con el modelo"""
+
+    def __init__(self, ui):
+        self.ui = ui
+        self.modelo = DescargarVideos()
+        self.conectar_eventos()
+        # Inicializa las rutas para evitar AttributeError
+        self.ruta_video = None
+        self.ruta_varios = None
+        self.ruta_playlist = None
+        self.archivo_varios = None
+
+    def conectar_eventos(self):
+        # Botones "Guardar en..."
+        self.ui.btn_ruta_video.clicked.connect(self.seleccionar_ruta_video)
+        self.ui.btn_ruta_varios.clicked.connect(self.seleccionar_ruta_varios)
+        self.ui.btn_ruta_playlist.clicked.connect(self.seleccionar_ruta_playlist)
+
+        # Botón "Abrir documento" para varios videos
+        self.ui.btn_doc.clicked.connect(self.abrir_documento_txt)
+
+        # Botones descargar
+        self.ui.btn_descargar_video.clicked.connect(self.descargar_un_video)
+        self.ui.btn_descargar_varios.clicked.connect(self.descargar_varios_videos)
+        self.ui.btn_descargar_playlist.clicked.connect(self.descargar_playlist)
+
+    def seleccionar_ruta_video(self):
+        ruta = QtWidgets.QFileDialog.getExistingDirectory(None, "Seleccionar carpeta para guardar video")
+        if ruta:
+            self.ui.lbl_guardar_video.setText(f"Guardar en: {ruta}")
+            self.ruta_video = ruta
+
+    def seleccionar_ruta_varios(self):
+        ruta = QtWidgets.QFileDialog.getExistingDirectory(None, "Seleccionar carpeta para guardar videos")
+        if ruta:
+            self.ui.lbl_guardar_varios.setText(f"Guardar en: {ruta}")
+            self.ruta_varios = ruta
+
+    def seleccionar_ruta_playlist(self):
+        ruta = QtWidgets.QFileDialog.getExistingDirectory(None, "Seleccionar carpeta para guardar playlist")
+        if ruta:
+            self.ui.lbl_guardar_playlist.setText(f"Guardar en: {ruta}")
+            self.ruta_playlist = ruta
+
+    def abrir_documento_txt(self):
+        archivo, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Seleccionar documento con URLs", "", "Archivos TXT (*.txt)")
+        if archivo:
+            self.ui.lbl_doc.setText(f"Archivo: {archivo}")
+            self.archivo_varios = archivo
+            
+    def actualizar_status(self, mensaje):
+        """Actualiza la barra de estado de la ventana principal."""
+        if hasattr(self.ui, 'statusbar'):
+            self.ui.statusbar.showMessage(mensaje, 5000) # Mostrar mensaje por 5 segundos
+        else:
+            print(f"DEBUG: {mensaje}") # Mensaje de depuración si no hay statusbar
+
+    def descargar_un_video(self):
+        url = self.ui.txt_url_video.text().strip()
+        ruta = getattr(self, "ruta_video", None)
+        if url and ruta:
+            self.actualizar_status("Descargando video...")
+            self.modelo.descargar_video(url, ruta, self.actualizar_status)
+        else:
+            self.actualizar_status("Error: URL o ruta de guardado no especificadas.")
+
+    def descargar_playlist(self):
+        url = self.ui.txt_url_playlist.text().strip()
+        ruta = getattr(self, "ruta_playlist", None)
+        if url and ruta:
+            self.actualizar_status("Descargando playlist...")
+            self.modelo.descargar_playlist(url, ruta, self.actualizar_status)
+        else:
+            self.actualizar_status("Error: URL o ruta de guardado no especificadas.")
+
+    def descargar_varios_videos(self):
+        ruta = getattr(self, "ruta_varios", None)
+        archivo = getattr(self, "archivo_varios", None)
+        if archivo and ruta:
+            self.actualizar_status("Leyendo archivo de URLs...")
+            lector = LecturaVideos(archivo)
+            lista_urls = lector.obtener_links()
+            if lista_urls:
+                self.actualizar_status(f"Descargando {len(lista_urls)} videos...")
+                self.modelo.descargar_varios_videos(lista_urls, ruta, self.actualizar_status)
+            else:
+                self.actualizar_status("Error: No se encontraron URLs en el archivo.")
+        else:
+            self.actualizar_status("Error: Archivo de URLs o ruta de guardado no especificados.")

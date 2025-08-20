@@ -1,0 +1,14 @@
+from pytubefix import YouTube
+from pytubefix.cli import on_progress
+
+class DownloadModel:
+    def descargar_video(self, url):
+        try:
+            yt = YouTube(url, on_progress_callback=on_progress)
+            stream = yt.streams.get_highest_resolution()
+            stream.download()
+            print(f"Video '{yt.title}' descargado correctamente.")
+        except Exception as e:
+            print(f"Error al descargar: {e}")
+
+

@@ -1,0 +1,81 @@
+QWidget#centralwidget {
+    background-color: #181818;  /* fondo oscuro tipo YouTube */
+    color: #FFFFFF;             /* texto blanco */
+    font-family: Arial;
+    font-size: 12px;
+}
+
+QFrame {
+    background-color: #202020;  /* slightly lighter para frames */
+    border-radius: 5px;
+}
+
+QLabel {
+    color: #FFFFFF;
+}
+
+QLineEdit {
+    background-color: #303030;
+    color: #FFFFFF;
+    border: 1px solid #505050;
+    border-radius: 3px;
+    padding: 4px;
+}
+
+QPushButton {
+    background-color: #FF0000; /* rojo YouTube */
+    color: #FFFFFF;
+    border-radius: 3px;
+    padding: 6px;
+}
+
+QPushButton#btn_ruta_video,
+QPushButton#btn_ruta_varios,
+QPushButton#btn_doc,
+QPushButton#btn_ruta_playlist {
+    background-color: #505050;
+    color: #FFFFFF;
+}
+
+QPushButton:disabled {
+    background-color: #555555;
+    color: #AAAAAA;
+}
+
+QProgressBar {
+    background-color: #303030;
+    color: #FFFFFF;
+    border: 1px solid #505050;
+    border-radius: 5px;
+    text-align: center;
+}
+
+QProgressBar::chunk {
+    background-color: #FF0000;  /* rojo YouTube */
+}
+
+QTabWidget::pane {
+    border: 1px solid #505050;
+    top: -1px;
+    background-color: #202020;
+}
+
+QTabBar::tab {
+    background-color: #202020;
+    color: #FFFFFF;
+    padding: 6px 12px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+QTabBar::tab:selected {
+    background-color: #FF0000;
+    color: #FFFFFF;
+}
+
+QLabel#status_varios {
+    background-color: #121212;  /* barra inferior más oscura */
+    color: #FFFFFF;
+    padding: 3px;
+    border-top: 1px solid #505050;
+}
