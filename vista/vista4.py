@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from modelo.rutas import resource_path
 
 
 class Ui_MainWindow(object):
@@ -27,7 +28,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_tab1.setObjectName("verticalLayout_tab1")
         self.lbl_img_video = QtWidgets.QLabel(self.tab_un_video)
         self.lbl_img_video.setText("")
-        self.lbl_img_video.setPixmap(QtGui.QPixmap("ui\\../assets/images/video.jpg"))
+        self.lbl_img_video.setPixmap(QtGui.QPixmap(resource_path("ui\\../assets/images/video.jpg")))
         self.lbl_img_video.setScaledContents(False)
         self.lbl_img_video.setAlignment(QtCore.Qt.AlignCenter)
         self.lbl_img_video.setObjectName("lbl_img_video")
@@ -74,7 +75,7 @@ class Ui_MainWindow(object):
         self.layout_frame_varios.setObjectName("layout_frame_varios")
         self.lbl_img_varios = QtWidgets.QLabel(self.frame_img_varios)
         self.lbl_img_varios.setText("")
-        self.lbl_img_varios.setPixmap(QtGui.QPixmap("ui\\../assets/images/videos.jpg"))
+        self.lbl_img_varios.setPixmap(QtGui.QPixmap(resource_path("ui\\../assets/images/videos.jpg")))
         self.lbl_img_varios.setScaledContents(False)
         self.lbl_img_varios.setAlignment(QtCore.Qt.AlignCenter)
         self.lbl_img_varios.setObjectName("lbl_img_varios")
@@ -113,7 +114,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_tab3.setObjectName("verticalLayout_tab3")
         self.lbl_img_playlist = QtWidgets.QLabel(self.tab_playlist)
         self.lbl_img_playlist.setText("")
-        self.lbl_img_playlist.setPixmap(QtGui.QPixmap("ui\\../assets/images/plylist.png"))
+        self.lbl_img_playlist.setPixmap(QtGui.QPixmap(resource_path("ui\\../assets/images/plylist.png")))
         self.lbl_img_playlist.setScaledContents(False)
         self.lbl_img_playlist.setAlignment(QtCore.Qt.AlignCenter)
         self.lbl_img_playlist.setObjectName("lbl_img_playlist")
